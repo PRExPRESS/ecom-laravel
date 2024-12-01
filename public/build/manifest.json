@@ -1,0 +1,44 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-4f3bf986.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/fonts/icomoon5811.eot": {
+    "file": "assets/icomoon5811-f9799fc3.eot",
+    "src": "resources/fonts/icomoon5811.eot"
+  },
+  "resources/fonts/icomoon5811.svg": {
+    "file": "assets/icomoon5811-ef9e62f8.svg",
+    "src": "resources/fonts/icomoon5811.svg"
+  },
+  "resources/fonts/icomoon5811.ttf": {
+    "file": "assets/icomoon5811-66280caa.ttf",
+    "src": "resources/fonts/icomoon5811.ttf"
+  },
+  "resources/fonts/icomoon5811.woff": {
+    "file": "assets/icomoon5811-1343dbd2.woff",
+    "src": "resources/fonts/icomoon5811.woff"
+  },
+  "resources/images/item/cursor-close.svg": {
+    "file": "assets/cursor-close-9a3edcdb.svg",
+    "src": "resources/images/item/cursor-close.svg"
+  },
+  "resources/images/shop/file/page-title-blog.png": {
+    "file": "assets/page-title-blog-cabe0f16.png",
+    "src": "resources/images/shop/file/page-title-blog.png"
+  },
+  "resources/images/slider/fashion-slideshow-08.jpg": {
+    "file": "assets/fashion-slideshow-08-77775d20.jpg",
+    "src": "resources/images/slider/fashion-slideshow-08.jpg"
+  },
+  "resources/images/slider/image_bg_testimonials.jpg": {
+    "file": "assets/image_bg_testimonials-1904672f.jpg",
+    "src": "resources/images/slider/image_bg_testimonials.jpg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-e06c39c9.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}

@@ -1,0 +1,34 @@
+<?php 
+return [
+    'css'=>[
+        "style"=>"/css/style.css",
+        "animate"=>"/css/animate.css",
+        "bootstrap-select"=>"/css/bootstrap-select.min.css",
+        "bootstrap"=>"/css/bootstrap.min.css",
+        "drift-basic"=>"/css/drift-basic.css",
+        "image-comparer-viewer"=>"/css/image-comparer-viewer.css",
+        "photoswipe"=>"/css/photoswipe.css",
+        "swiper-bundle"=>"/css/swiper-bundle.min.css",
+
+    ],
+    'js'=>[
+        "jquery"=>"/js/jquery.min.js",
+        "bootstrap-select"=>"/js/bootstrap-select.min.js",
+        "bootstrap"=>"/js/bootstrap.js",
+        "bootstrap-min"=>"/js/bootstrap.min.js",
+        "carousel"=>"/js/carousel.js",
+        "count-down"=>"/js/count-down.js",
+        "drift"=>"/js/drift.min.js",
+        "image-comparer-viewer"=>"/js/image-comparer-viewer.js",
+        "jquery-validate"=>"/js/jquery-validate.js",
+        "lazysize"=>"/js/lazysize.min.js",
+        "main"=>"/js/main.js",
+        "model-viewer"=>"/js/model-viewer.min.js",
+        "multiple-modal"=>"/js/multiple-modal.js",
+        "rangle-slider"=>"/js/rangle-slider.js",
+        "shop"=>"/js/shop.js",
+        "swiper-bundle"=>"/js/swiper-bundle.min.js",
+        "wow"=>"/js/wow.min.js",
+        "zoom"=>"/js/zoom.js",
+    ]
+];
