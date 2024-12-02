@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
+use Exception;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -13,7 +16,8 @@ class CartController extends Controller
             'price' => 'required',
             'quantity' => 'required',
             'color' =>'required',
-            'size' =>'required'
+            'size' =>'required',
+            'image' => 'required'
         ]);
 
         $cart = session()->get('cart');
@@ -27,7 +31,9 @@ class CartController extends Controller
                 'price' => $validated['price'],
                 'quantity' => $validated['quantity'],
                 'color' => $validated['color'],
-                'size' => $validated['size']
+                'size' => $validated['size'],
+                'image' => $validated['image']
+
             ];
         }
         session()->put('cart', $cart);
@@ -80,6 +86,66 @@ class CartController extends Controller
             'status' => 'error',
             'message' => 'Product not found in cart',
         ]);
+    }
+
+    //checkout
+    public function checkout(Request $request){
+        $user = auth()->user();
+        $cart = session()->get('cart');
+        $total = 0;
+
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+        try {
+            //code...
+            $order = Order::create([
+                'user_id' => $user->id,
+                'total_price' => $total,
+                'status' => 'pending'
+
+            ]);
+
+            $orderItems = [];
+            foreach ($cart as $item) {
+                $orderItems[] = [
+                    'order_id' => $order->id,
+                    'product_id' => $item['item_id'],
+                    'size_id' => $item['size'],
+                    'color_id' => $item['color'],
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price']
+                ];
+            }
+            //dd($orderItems);
+            OrderItem::insert($orderItems);
+            
+            session()->forget('cart');
+            return redirect()->route('my-account')->with('success', 'Order created successfully');
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return back()->with('error', $e->getMessage());
+        }
+        
+    }
+
+    //orders
+    public function orders(){
+        $orders = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
+        ->join('products', 'order_items.product_id', '=', 'products.id')
+        
+        ->join('users', 'orders.user_id', '=', 'users.id')  // Join with users
+        
+        ->paginate(10);
+
+        return view('admin.orders', compact('orders'));
+    }
+
+    //delete order
+    public function deleteOrder($id){
+        $order = Order::find($id);
+        $order->delete();
+        return redirect()->route('admin.admin.orders')->with('success', 'Order deleted successfully');
     }
     
 }

@@ -4,6 +4,15 @@
 
 @section('content')
 
+@if(session('success'))
+<div class="position-fixed top-0 z-1 end-0 alert-wrap" >
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+@endif
+
 <!-- Slider -->
 <div class="tf-slideshow slider-home-2 slider-effect-fade position-relative">
     <div dir="ltr" class="swiper tf-sw-slideshow" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0" data-loop="true" data-auto-play="true" data-delay="2000" data-speed="1000">
@@ -133,12 +142,33 @@
         <div class="hover-sw-nav hover-sw-2">
             <div dir="ltr" class="swiper tf-sw-product-sell wrap-sw-over" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="15" data-pagination="2" data-pagination-md="3" data-pagination-lg="3">
                 <div class="swiper-wrapper">
+                    @foreach ($products as $product  )
+
+                    @php
+                            $colors = explode(',', $product->colors);
+                            $sizes = explode(',', $product->sizes);
+                            $product_for_cart = [
+                                'id' => $product->id,
+                                'name' => $product->name,
+                                'price' => $product->price,
+                                'color' => $colors[0],
+                                'size' => $sizes[0],
+                                'quantity' => 1,
+                                'image' => $product->image,
+                            ];
+                        @endphp
+                    
                     <div class="swiper-slide" lazy="true">
                         <div class="card-product style-2">
                             <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product" data-src="images/products/orange-1.jpg" src="images/products/orange-1.jpg" alt="image-product">
-                                    <img class="lazyload img-hover" data-src="images/products/white-1.jpg" src="images/products/white-1.jpg" alt="image-product">
+                                <a href="/product/{{ $product->slug . '-' . explode(',', $product->colors)[0] . '-' . explode(',', $product->sizes)[0] . '?id=' . $product->id }}"
+                                    class="product-img">
+                                    <img class="lazyload img-product"
+                                        data-src="{{ Storage::url($product->image) }}"
+                                        src="{{ Storage::url($product->image) }}" alt="{{ $product->slug }}">
+                                    <img class="lazyload img-hover"
+                                        data-src="{{ Storage::url($product->image) }}"
+                                        src="{{ Storage::url($product->image) }}" alt="{{ $product->slug }}">
                                 </a>
                                 <div class="list-product-btn column-left">
                                     <a href="javascript:void(0);" class="box-icon wishlist bg_white btn-icon-action">
@@ -146,21 +176,19 @@
                                         <span class="tooltip">Add to Wishlist</span>
                                         <span class="icon icon-delete"></span>
                                     </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
+                                    
                                 </div>
                                 <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add" data-bs-toggle="modal" class="box-icon quick-add style-2">
+                                    <a href="#" data-bs-toggle="modal"
+                                        data-product='{{ json_encode($product_for_cart) }}'
+                                        class="box-icon bg_white quick-add tf-btn-loading add-to-cart">
                                         <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
+                                        <span class="tooltip">Add to cart</span>
                                     </a>
-                                    <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-2">
+                                    {{-- <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-2">
                                         <span class="icon icon-view"></span>
                                         <span class="text">QUICK VIEW</span>
-                                    </a>
+                                    </a> --}}
                                 </div>
                                 <div class="size-list style-2">
                                     <span>S</span>
@@ -168,334 +196,17 @@
                                     <span>L</span>
                                     <span>XL</span>
                                 </div>
-                                <div class="on-sale-wrap text-end">
-                                    <div class="on-sale-item">-33%</div>
-                                </div>
-                                <div class="countdown-box">
-                                    <div class="js-countdown" data-timer="1007500" data-labels="d :,h :,m :,s"></div>
-                                </div>
+                                
                             </div>
                             <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Ribbed Tank Top</a>
-                                <span class="price">$16.95</span>
-                                <ul class="list-color-product">
-                                    <li class="list-color-item color-swatch active">
-                                        <span class="tooltip">Orange</span>
-                                        <span class="swatch-value bg_orange-3"></span>
-                                        <img class="lazyload" data-src="images/products/orange-1.jpg" src="images/products/orange-1.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Black</span>
-                                        <span class="swatch-value bg_dark"></span>
-                                        <img class="lazyload" data-src="images/products/black-1.jpg" src="images/products/black-1.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">White</span>
-                                        <span class="swatch-value bg_white"></span>
-                                        <img class="lazyload" data-src="images/products/white-1.jpg" src="images/products/white-1.jpg" alt="image-product">
-                                    </li>
-                                </ul>
+                                <a href="/product/{{ $product->slug . '-' . explode(',', $product->colors)[0] . '-' . explode(',', $product->sizes)[0] }}"
+                                    class="title link">{{ $product->name }}</a>
+                                <span class="price">LKR {{ $product->price }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product" data-src="images/products/brown.jpg" src="images/products/brown.jpg" alt="image-product">
-                                    <img class="lazyload img-hover" data-src="images/products/purple.jpg" src="images/products/purple.jpg" alt="image-product">
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);" class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add" data-bs-toggle="modal" class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                                <div class="size-list style-2">
-                                    <span>S</span>
-                                    <span>M</span>
-                                    <span>L</span>
-                                    <span>XL</span>
-                                </div>
-                            
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Ribbed modal T-shirt</a>
-                                <span class="price">From $18.95</span>
-                                <ul class="list-color-product">
-                                    <li class="list-color-item color-swatch active">
-                                        <span class="tooltip">Brown</span>
-                                        <span class="swatch-value bg_brown"></span>
-                                        <img class="lazyload" data-src="images/products/brown.jpg" src="images/products/brown.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Light Purple</span>
-                                        <span class="swatch-value bg_purple"></span>
-                                        <img class="lazyload" data-src="images/products/purple.jpg" src="images/products/purple.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Light Green</span>
-                                        <span class="swatch-value bg_light_green"></span>
-                                        <img class="lazyload" data-src="images/products/green.jpg" src="images/products/green.jpg" alt="image-product">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product" data-src="images/products/white-3.jpg" src="images/products/white-3.jpg" alt="image-product">
-                                    <img class="lazyload img-hover" data-src="images/products/white-4.jpg" src="images/products/white-4.jpg" alt="image-product">
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);" class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-2">
-                                    <a href="#quick_add" data-bs-toggle="modal" class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Oversized Printed T-shirt</a>
-                                <span class="price">$10.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product" data-src="images/products/white-2.jpg" src="images/products/white-2.jpg" alt="image-product">
-                                    <img class="lazyload img-hover" data-src="images/products/pink-1.jpg" src="images/products/pink-1.jpg" alt="image-product">
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);" class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add" data-bs-toggle="modal" class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                                <div class="size-list style-2">
-                                    <span>S</span>
-                                    <span>M</span>
-                                    <span>L</span>
-                                    <span>XL</span>
-                                </div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="product-detail.html" class="title link">Oversized Printed T-shirt</a>
-                                <span class="price">$16.95</span>
-                                <ul class="list-color-product">
-                                    <li class="list-color-item color-swatch active">
-                                        <span class="tooltip">White</span>
-                                        <span class="swatch-value bg_white"></span>
-                                        <img class="lazyload" data-src="images/products/white-2.jpg" src="images/products/white-2.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Pink</span>
-                                        <span class="swatch-value bg_purple"></span>
-                                        <img class="lazyload" data-src="images/products/pink-1.jpg" src="images/products/pink-1.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Black</span>
-                                        <span class="swatch-value bg_dark"></span>
-                                        <img class="lazyload" data-src="images/products/black-2.jpg" src="images/products/black-2.jpg" alt="image-product">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product" data-src="images/products/light-green-1.jpg" src="images/products/light-green-1.jpg" alt="image-product">
-                                    <img class="lazyload img-hover" data-src="images/products/light-green-2.jpg" src="images/products/light-green-2.jpg" alt="image-product">
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);" class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add" data-bs-toggle="modal" class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                                <div class="size-list style-2">
-                                    <span>S</span>
-                                    <span>M</span>
-                                    <span>L</span>
-                                    <span>XL</span>
-                                </div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="#" class="title link">Loose Fit Sweatshirt</a>
-                                <span class="price">$10.00</span>
-                                <ul class="list-color-product">
-                                    <li class="list-color-item color-swatch active">
-                                        <span class="tooltip">Light Green</span>
-                                        <span class="swatch-value bg_light-green"></span>
-                                        <img class="lazyload" data-src="images/products/light-green-1.jpg" src="images/products/light-green-1.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Black</span>
-                                        <span class="swatch-value bg_dark"></span>
-                                        <img class="lazyload" data-src="images/products/black-3.jpg" src="images/products/black-3.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Blue</span>
-                                        <span class="swatch-value bg_blue-2"></span>
-                                        <img class="lazyload" data-src="images/products/blue.jpg" src="images/products/blue.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Dark Blue</span>
-                                        <span class="swatch-value bg_dark-blue"></span>
-                                        <img class="lazyload" data-src="images/products/dark-blue.jpg" src="images/products/dark-blue.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">White</span>
-                                        <span class="swatch-value bg_white"></span>
-                                        <img class="lazyload" data-src="images/products/white-6.jpg" src="images/products/white-6.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Light Grey</span>
-                                        <span class="swatch-value bg_light-grey"></span>
-                                        <img class="lazyload" data-src="images/products/light-grey.jpg" src="images/products/light-grey.jpg" alt="image-product">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="swiper-slide" lazy="true">
-                        <div class="card-product style-2">
-                            <div class="card-product-wrapper">
-                                <a href="product-detail.html" class="product-img">
-                                    <img class="lazyload img-product" data-src="images/products/black-4.jpg" src="images/products/black-4.jpg" alt="image-product">
-                                    <img class="lazyload img-hover" data-src="images/products/black-5.jpg" src="images/products/black-5.jpg" alt="image-product">
-                                </a>
-                                <div class="list-product-btn column-left">
-                                    <a href="javascript:void(0);" class="box-icon wishlist bg_white btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                </div>
-                                <div class="list-product-btn absolute-3">
-                                    <a href="#quick_add" data-bs-toggle="modal" class="box-icon quick-add style-2">
-                                        <span class="icon icon-bag"></span>
-                                        <span class="text">QUICK ADD</span>
-                                    </a>
-                                    <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-2">
-                                        <span class="icon icon-view"></span>
-                                        <span class="text">QUICK VIEW</span>
-                                    </a>
-                                </div>
-                                <div class="size-list style-2">
-                                    <span>S</span>
-                                    <span>M</span>
-                                    <span>L</span>
-                                    <span>XL</span>
-                                </div>
-                            </div>
-                            <div class="card-product-info">
-                                <a href="#" class="title link">Regular Fit Oxford Shirt</a>
-                                <span class="price">$10.00</span>
-                                <ul class="list-color-product">
-                                    <li class="list-color-item color-swatch active">
-                                        <span class="tooltip">Black</span>
-                                        <span class="swatch-value bg_dark"></span>
-                                        <img class="lazyload" data-src="images/products/black-4.jpg" src="images/products/black-4.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Dark Blue</span>
-                                        <span class="swatch-value bg_dark-blue"></span>
-                                        <img class="lazyload" data-src="images/products/dark-blue-2.jpg" src="images/products/dark-blue-2.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Beige</span>
-                                        <span class="swatch-value bg_beige"></span>
-                                        <img class="lazyload" data-src="images/products/beige.jpg" src="images/products/beige.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">Light Blue</span>
-                                        <span class="swatch-value bg_light-blue"></span>
-                                        <img class="lazyload" data-src="images/products/light-blue.jpg" src="images/products/light-blue.jpg" alt="image-product">
-                                    </li>
-                                    <li class="list-color-item color-swatch">
-                                        <span class="tooltip">White</span>
-                                        <span class="swatch-value bg_white"></span>
-                                        <img class="lazyload" data-src="images/products/white-7.jpg" src="images/products/white-7.jpg" alt="image-product">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>  
-                    </div>
+                    @endforeach
+                    
                 </div>
             </div>
             <div class="nav-sw nav-next-slider nav-next-product box-icon w_46 round"><span class="icon icon-arrow-left"></span></div>

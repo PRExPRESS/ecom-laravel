@@ -10,6 +10,9 @@
     <title>@yield('title', config('app.name')) | Trendiest</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <link rel="stylesheet" href="{{ asset('build/assets/app-044a44ad.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" integrity="sha512-Ysw1DcK1P+uYLqprEAzNQJP+J4hTx4t/3X2nbVwszao8wD+9afLjBQYjz7Uk4ADP+Er++mJoScI42ueGtQOzEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
@@ -22,6 +25,22 @@
     {{-- <pre>
         {{ print_r($cart) }}
     </pre> --}}
+    @if (session('success'))
+        <div class="position-fixed top-0 z-3 end-0 alert-wrap">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="position-fixed top-0 z-3 end-0 alert-wrap">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
 
     <header id="header" class="header-default">
         <div class="px_15 lg-px_40">
@@ -37,7 +56,7 @@
                     </a>
                 </div>
                 <div class="col-xl-3 col-md-4 col-6">
-                    <a href="index.html" class="logo-header">
+                    <a href="/" class="logo-header">
                         <img src="{{ asset('images/logo/logo.svg') }}" alt="logo" class="logo">
                     </a>
                 </div>
@@ -65,7 +84,7 @@
                         <li class="nav-search"><a href="#canvasSearch" data-bs-toggle="offcanvas"
                                 aria-controls="offcanvasLeft" class="nav-icon-item"><i class="icon icon-search"></i></a>
                         </li>
-                        <li class="nav-account"><a href="#login" data-bs-toggle="modal" class="nav-icon-item"><i
+                        <li class="nav-account"><a href="/my-account" class="nav-icon-item"><i
                                     class="icon icon-account"></i></a></li>
                         <li class="nav-cart"><a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item"><i
                                     class="icon icon-bag"></i><span class="count-box">0</span></a></li>
@@ -314,7 +333,7 @@
                     </div>
                 </div>
                 <div class="tf-search-sticky">
-                    <form class="tf-mini-search-frm">
+                    <form class="tf-mini-search-frm" action="/shop-search" method="get">
                         <fieldset class="text">
                             <input type="text" placeholder="Search" class="" name="text" tabindex="0"
                                 value="" aria-required="true" required="">
@@ -442,7 +461,7 @@
                                             <a href="/view-cart"
                                                 class="tf-btn btn-outline radius-3 link w-100 justify-content-center">View
                                                 cart</a>
-                                            <a href="checkout.html"
+                                            <a href="/checkout"
                                                 class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>Check
                                                     out</span></a>
                                         </div>
@@ -709,6 +728,14 @@
                 </div>
             </div>
             <!-- /modal quick_view -->
+
+        </div>
+    </div>
+
+    <script type="module" src="{{ asset('build/assets/app-fd99b183.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

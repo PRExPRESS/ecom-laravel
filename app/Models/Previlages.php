@@ -14,9 +14,7 @@ class Previlages extends Model
         'add_product', 'edit_product', 'delete_product',
         'add_category', 'edit_category', 'delete_category',
         'add_brand', 'edit_brand', 'delete_brand',
-        'add_color', 'edit_color', 'delete_color',
-        'add_size', 'edit_size', 'delete_size',
-        'add_order', 'edit_order', 'delete_order',
+         'delete_order',
         'edit_user', 'delete_user', 'add_user',
     ];
 

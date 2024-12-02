@@ -261,41 +261,20 @@
   /* range
   -------------------------------------------------------------------------*/
   var rangePrice = function(){
-    const rangeInput = document.querySelectorAll('.range-input input')
-    const progress = document.querySelector('.progress-price')
-    const minPrice = document.querySelector('.min-price')
-    const maxPrice = document.querySelector('.max-price')
-
-    let priceGap = 10
-
-    rangeInput.forEach(input => {
-        input.addEventListener('input', e => {
-            let minValue = parseInt(rangeInput[0].value, 10)
-            let maxValue = parseInt(rangeInput[1].value, 10)
-
-            if (maxValue - minValue < priceGap) {
-                if (e.target.class === 'range-min') {
-                    rangeInput[0].value = maxValue - priceGap
-                } else {
-                    rangeInput[1].value = minValue + priceGap
-                }
-            } else {
-                progress.style.left = (minValue / rangeInput[0].max) * 100 + "%";
-                progress.style.right = 100 - (maxValue / rangeInput[1].max) * 100 + "%";
-            }
-
-            minPrice.innerHTML = minValue
-            maxPrice.innerHTML = maxValue
-
-            if (minValue >= 290) {
-                minPrice.innerHTML = 290
-            }
-
-            if (maxValue <= 10) {
-                maxPrice.innerHTML = 10
-            }
-        })
-    })
+    
+    $(".range-min, .range-max").on("input change", function () {
+      var selectedMinPrice = $(".range-min").val() ? parseFloat($(".range-min").val()) : 500;
+      var selectedMaxPrice = $(".range-max").val() ? parseFloat($(".range-max").val()) : 50000;
+  
+     
+      //console.log('selectedMinPrice', selectedMinPrice, 'selectedMaxPrice', selectedMaxPrice);
+  
+      
+      $(".min-price").text(`${selectedMinPrice}`);
+      $(".max-price").text(`${selectedMaxPrice}`);
+  
+      
+    });
 
   }
 
@@ -603,16 +582,7 @@
 
     var basePrice = parseFloat($(".price-on-sale").data("base-price")) || parseFloat($(".price-on-sale").text().replace("$", ""));
     var quantityInput = $(".quantity-product");
-    // quantityInput.on("keydown keypress input", function(event) {
-    //   event.preventDefault();
-    // });
-    $(".color-btn, .size-btn").on("click", function () {
-      var newPrice = parseFloat($(this).data("price")) || basePrice;
-      quantityInput.val(1);
-      $(".price-on-sale").text("$" + newPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-      var totalPrice = newPrice;
-      $(".total-price").text("$" + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    });
+    
 
     $(".btn-increase").on("click", function () {
       var currentQuantity = parseInt(quantityInput.val());
@@ -629,10 +599,10 @@
     });
 
     function updateTotalPrice() {
-      var currentPrice = parseFloat($(".price-on-sale").text().replace("$", ""));
+      var currentPrice = parseFloat($(".price-on-sale").text().replace("LKR", ""));
       var quantity = parseInt(quantityInput.val());
       var totalPrice = currentPrice * quantity;
-      $(".total-price").text("$" + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+      $(".total-price").text("LKR" + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     }
 
   };
@@ -724,7 +694,105 @@
       });
     }); // each contactform
   };
-  
+
+  var registerForm = function () {
+    $("#register-form").validate({
+      rules: {
+          fname: {
+              required: true,
+              minlength: 2
+          },
+          lname: {
+              required: true,
+              minlength: 2
+          },
+          email: {
+              required: true,
+              email: true
+          },
+          phone: {
+              required: true,
+              phoneUS: true  // Use jQuery Validation's built-in phoneUS method or customize your own
+          },
+          password: {
+              required: true,
+              minlength: 6
+          }
+      },
+      messages: {
+          fname: {
+              required: "Please enter your first name.",
+              minlength: "Your first name must be at least 2 characters long."
+          },
+          lname: {
+              required: "Please enter your last name.",
+              minlength: "Your last name must be at least 2 characters long."
+          },
+          email: {
+              required: "Please enter your email address.",
+              email: "Please enter a valid email address."
+          },
+          phone: {
+              required: "Please enter your phone number.",
+              phoneUS: "Please enter a valid phone number."  // Customize phone validation if needed
+          },
+          password: {
+              required: "Please enter a password.",
+              minlength: "Your password must be at least 6 characters long."
+          }
+      },
+      errorPlacement: function (error, element) {
+          // Error messages will automatically appear under the relevant input field.
+          error.insertAfter(element.next('label'));  // Place the error after the input field's label
+      },
+      submitHandler: function (form) {
+          // Only submit the form if validation passes
+          form.submit();  // This will trigger the actual form submission
+      }
+  });
+  }
+
+  //login validation
+  var validateLoginForm = function () {
+    $("#login-form").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true 
+        },
+        password: {
+          required: true,
+          minlength: 6 
+        }
+      },
+      messages: {
+        email: {
+          required: "Please enter your email address",
+          email: "Please enter a valid email address"
+        },
+        password: {
+          required: "Please enter your password",
+          minlength: "Your password must be at least 6 characters long"
+        }
+      },
+      errorElement: "div",  
+      errorClass: "invalid-feedback",  
+      highlight: function (element) {
+        $(element).addClass("is-invalid");  
+      },
+      unhighlight: function (element) {
+        $(element).removeClass("is-invalid");  
+      },
+      errorPlacement: function (error, element) {
+        
+        error.insertAfter(element);
+      },
+      submitHandler: function (form) {
+        
+        form.submit();
+      }
+    });
+  };
   /* subscribe mailchimp
   ------------------------------------------------------------------------------------- */
   var ajaxSubscribe = {
@@ -930,6 +998,55 @@
   };
 
 
+  //change my-account
+  var changeMyAccount = function () {
+    $(".my-account-nav-item").click(function(e) {
+      e.preventDefault(); 
+
+      
+      $(".my-account-nav-item").removeClass("active");
+
+      
+      $(this).addClass("active");
+
+      
+      $(".dashboard").hide();
+      $(".orders").hide();
+      $(".account-details").hide();
+
+      
+      var target = $(this).text().toLowerCase().trim(); 
+      switch (target) {
+          case "dashboard":
+              $(".dashboard").show();
+              break;
+          case "orders":
+              $(".orders").show();
+              break;
+          case "address":
+              $(".my-account-content.account-address").show();
+              break;
+          case "account details":
+              $(".account-details").show();
+              break;
+          case "wishlist":
+              $(".my-account-content.account-wishlist").show();
+              break;
+          case "logout":
+              
+              window.location.href = "/logout";
+              break;
+          default:
+              $(".dashboard").show(); 
+      }
+  });
+
+  
+  $(".my-account-nav-item").first().trigger('click');
+  }
+    
+
+
 
 
   // Dom Ready
@@ -969,6 +1086,9 @@
     clickControl();
     RTL();
     hoverPin();
+    registerForm();
+    validateLoginForm();
+    changeMyAccount();
     //new WOW().init();
   });
 })(jQuery);
