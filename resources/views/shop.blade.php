@@ -80,51 +80,57 @@
                 <div class="meta-filter-shop"></div>
                 <div class="grid-layout wrapper-shop" data-grid="grid-4">
                     <!-- card product 1 -->
-                    @foreach ($products as $product )
-                    
-                    @php
-                    $colors = explode(',', $product->colors);
-                    $sizes = explode(',', $product->sizes);
-                    $product_for_cart = [
-                                        'id' => $product->id,
-                                        'name' => $product->name,
-                                        'price' => $product->price,
-                                        'color' => $colors[0],
-                                        'size' => $sizes[0],
-                                        'quantity' => 1,
-                                    ];
-                    @endphp
+                    @foreach ($products as $product)
+                        @php
+                            $colors = explode(',', $product->colors);
+                            $sizes = explode(',', $product->sizes);
+                            $product_for_cart = [
+                                'id' => $product->id,
+                                'name' => $product->name,
+                                'price' => $product->price,
+                                'color' => $colors[0],
+                                'size' => $sizes[0],
+                                'quantity' => 1,
+                                'image' => $product->image,
+                            ];
+                        @endphp
 
-                    <div class="card-product" data-price="10">
-                        <div class="card-product-wrapper">
-                            <a href="/product/{{ $product->slug.'-'.explode(',', $product->colors)[0].'-'.explode(',', $product->sizes)[0] }}" class="product-img">
-                                <img class="lazyload img-product" data-src="{{ asset('/images/products/'.$product->image) }}"
-                                    src="{{ asset('/images/products/'.$product->image) }}" alt="{{ $product->slug }}">
-                                <img class="lazyload img-hover" data-src="{{ asset('/images/products/'.$product->image) }}"
-                                    src="{{ asset('/images/products/'.$product->image) }}" alt="{{ $product->slug }}">
-                            </a>
-                            <div class="list-product-btn absolute-2">
-                                <a href="#shoppingCart" data-bs-toggle="modal" data-product='{{ json_encode($product_for_cart) }}'
-                                    class="box-icon bg_white quick-add tf-btn-loading">
-                                    <span class="icon icon-bag"></span>
-                                    <span class="tooltip">Add to cart</span>
+
+                        <div class="card-product" data-price="10">
+                            <div class="card-product-wrapper">
+                                <a href="/product/{{ $product->slug . '-' . explode(',', $product->colors)[0] . '-' . explode(',', $product->sizes)[0] . '?id=' . $product->id }}"
+                                    class="product-img">
+                                    <img class="lazyload img-product"
+                                        data-src="{{ asset('/images/products/' . $product->image) }}"
+                                        src="{{ asset('/images/products/' . $product->image) }}" alt="{{ $product->slug }}">
+                                    <img class="lazyload img-hover"
+                                        data-src="{{ asset('/images/products/' . $product->image) }}"
+                                        src="{{ asset('/images/products/' . $product->image) }}" alt="{{ $product->slug }}">
                                 </a>
-                                
-                                
-                                <a href="#quick_view" data-bs-toggle="modal"
-                                    class="box-icon bg_white quickview tf-btn-loading">
-                                    <span class="icon icon-view"></span>
-                                    <span class="tooltip">Quick View</span>
-                                </a>
+                                <div class="list-product-btn absolute-2">
+                                    <a href="#" data-bs-toggle="modal"
+                                        data-product='{{ json_encode($product_for_cart) }}'
+                                        class="box-icon bg_white quick-add tf-btn-loading add-to-cart">
+                                        <span class="icon icon-bag"></span>
+                                        <span class="tooltip">Add to cart</span>
+                                    </a>
+
+
+                                    <a href="#quick_view" data-bs-toggle="modal"
+                                        class="box-icon bg_white quickview tf-btn-loading">
+                                        <span class="icon icon-view"></span>
+                                        <span class="tooltip">Quick View</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-product-info">
+                                <a href="/product/{{ $product->slug . '-' . explode(',', $product->colors)[0] . '-' . explode(',', $product->sizes)[0] }}"
+                                    class="title link">{{ $product->name }}</a>
+                                <span class="price">LKR {{ $product->price }}</span>
                             </div>
                         </div>
-                        <div class="card-product-info">
-                            <a href="/product/{{ $product->slug.'-'.explode(',', $product->colors)[0].'-'.explode(',', $product->sizes)[0] }}" class="title link">{{ $product->name }}</a>
-                            <span class="price">LKR {{ $product->price }}</span>
-                        </div>
-                    </div>
                     @endforeach
-                    
+
 
                 </div>
 
@@ -143,23 +149,26 @@
                 <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
             </header>
             <div class="canvas-body">
-                <div class="widget-facet wd-categories">
-                    <div class="facet-title" data-bs-target="#categories" data-bs-toggle="collapse" aria-expanded="true"
-                        aria-controls="categories">
-                        <span>Product categories</span>
-                        <span class="icon icon-arrow-up"></span>
+                <form action="/shop-filter" method="GET" id="facet-filter-form" class="facet-filter-form">
+                    <div class="widget-facet wd-categories">
+                        <div class="facet-title" data-bs-target="#categories" data-bs-toggle="collapse"
+                            aria-expanded="true" aria-controls="categories">
+                            <span>Product categories</span>
+                            <span class="icon icon-arrow-up"></span>
+                        </div>
+                        <div id="categories" class="collapse show">
+                            <ul class="list-categoris current-scrollbar mb_36">
+                                @foreach ($categories as $category)
+                                    <li class="cate-item">
+                                        <input type="checkbox" name="category[]" class="tf-check"
+                                            value="{{ $category->id }}" id="category_{{ $category->id }}">
+                                        <label for="category_{{ $category->id }}">{{ $category->name }}</label>
+                                    </li>
+                                @endforeach
+
+                            </ul>
+                        </div>
                     </div>
-                    <div id="categories" class="collapse show">
-                        <ul class="list-categoris current-scrollbar mb_36">
-                            <li class="cate-item current"><a href="shop-default.html"><span>Fashion</span></a></li>
-                            <li class="cate-item"><a href="shop-default.html"><span>Men</span></a></li>
-                            <li class="cate-item"><a href="shop-default.html"><span>Women</span></a></li>
-                            <li class="cate-item"><a href="shop-default.html"><span>Denim</span></a></li>
-                            <li class="cate-item"><a href="shop-default.html"><span>Dress</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <form action="#" id="facet-filter-form" class="facet-filter-form">
                     <div class="widget-facet">
                         <div class="facet-title" data-bs-target="#availability" data-bs-toggle="collapse"
                             aria-expanded="true" aria-controls="availability">
@@ -169,12 +178,14 @@
                         <div id="availability" class="collapse show">
                             <ul class="tf-filter-group current-scrollbar mb_36">
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="availability" class="tf-check" id="availability-1">
+                                    <input type="radio" name="availability" class="tf-check" id="availability-1 "
+                                        value="available">
                                     <label for="availability-1" class="label"><span>In
                                             stock</span>&nbsp;<span>(14)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="availability" class="tf-check" id="availability-2">
+                                    <input type="radio" name="availability" class="tf-check" id="availability-2"
+                                        value="sold out">
                                     <label for="availability-2" class="label"><span>Out of
                                             stock</span>&nbsp;<span>(2)</span></label>
                                 </li>
@@ -193,22 +204,22 @@
                                     <div class="progress-price"></div>
                                 </div>
                                 <div class="range-input">
-                                    <input class="range-min" type="range" min="0" max="300"
-                                        value="0" />
-                                    <input class="range-max" type="range" min="0" max="300"
-                                        value="300" />
+                                    <input class="range-min" name="price-min" type="range" min="500"
+                                        max="50000" value="500" />
+                                    <input class="range-max" name="price-max" type="range" min="500"
+                                        max="50000" value="50000" />
                                 </div>
                                 <div class="box-title-price">
                                     <span class="title-price">Price :</span>
                                     <div class="caption-price">
                                         <div>
-                                            <span>$</span>
-                                            <span class="min-price">0</span>
+                                            <span>LKR</span>
+                                            <span class="min-price">500</span>
                                         </div>
                                         <span>-</span>
                                         <div>
-                                            <span>$</span>
-                                            <span class="max-price">300</span>
+                                            <span>LKR</span>
+                                            <span class="max-price">50000</span>
                                         </div>
                                     </div>
                                 </div>
@@ -224,14 +235,15 @@
                         </div>
                         <div id="brand" class="collapse show">
                             <ul class="tf-filter-group current-scrollbar mb_36">
-                                <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="brand" class="tf-check" id="brand-1">
-                                    <label for="brand-1" class="label"><span>Ecomus</span>&nbsp;<span>(8)</span></label>
-                                </li>
-                                <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="brand" class="tf-check" id="brand-2">
-                                    <label for="brand-2" class="label"><span>M&H</span>&nbsp;<span>(8)</span></label>
-                                </li>
+                                @foreach ($brands as $brand)
+                                    <li class="list-item d-flex gap-12 align-items-center">
+                                        <input type="checkbox" name="brand[]" class="tf-check"
+                                            id="brand_{{ $brand->id }}" value="{{ $brand->id }}">
+                                        <label for="brand_{{ $brand->id }}"
+                                            class="label"><span>{{ $brand->name }}</span>&nbsp;<span>(8)</span></label>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                     </div>
@@ -336,65 +348,68 @@
                                 <li class="list-item d-flex gap-12 align-items-center">
                                     <input type="checkbox" name="color" class="tf-check-color bg_orange"
                                         id="orange" value="orange">
-                                    <label for="orange"
-                                        class="label"><span>Orange</span>&nbsp;<span>(1)</span></label>
+                                    <label for="orange" class="label"><span>Orange</span>&nbsp;<span>(1)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="checkbox" name="color" class="tf-check-color bg_pink"
-                                        id="pink" value="pink">
+                                    <input type="checkbox" name="color" class="tf-check-color bg_pink" id="pink"
+                                        value="pink">
                                     <label for="pink" class="label"><span>Pink</span>&nbsp;<span>(2)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="checkbox" name="color" class="tf-check-color bg_taupe"
-                                        id="taupe" value="taupe">
-                                    <label for="taupe"
-                                        class="label"><span>Taupe</span>&nbsp;<span>(1)</span></label>
+                                    <input type="checkbox" name="color" class="tf-check-color bg_taupe" id="taupe"
+                                        value="taupe">
+                                    <label for="taupe" class="label"><span>Taupe</span>&nbsp;<span>(1)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="checkbox" name="color" class="tf-check-color bg_white"
-                                        id="white" value="white">
-                                    <label for="white"
-                                        class="label"><span>White</span>&nbsp;<span>(14)</span></label>
+                                    <input type="checkbox" name="color" class="tf-check-color bg_white" id="white"
+                                        value="white">
+                                    <label for="white" class="label"><span>White</span>&nbsp;<span>(14)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
                                     <input type="checkbox" name="color" class="tf-check-color bg_yellow"
                                         id="yellow" value="yellow">
-                                    <label for="yellow"
-                                        class="label"><span>Yellow</span>&nbsp;<span>(1)</span></label>
+                                    <label for="yellow" class="label"><span>Yellow</span>&nbsp;<span>(1)</span></label>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="widget-facet">
-                        <div class="facet-title" data-bs-target="#size" data-bs-toggle="collapse"
-                            aria-expanded="true" aria-controls="size">
+                        <div class="facet-title" data-bs-target="#size" data-bs-toggle="collapse" aria-expanded="true"
+                            aria-controls="size">
                             <span>Size</span>
                             <span class="icon icon-arrow-up"></span>
                         </div>
                         <div id="size" class="collapse show">
                             <ul class="tf-filter-group current-scrollbar">
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="size" class="tf-check tf-check-size"
-                                        value="s" id="s">
+                                    <input type="radio" name="size" class="tf-check tf-check-size" value="s"
+                                        id="s">
                                     <label for="s" class="label"><span>S</span>&nbsp;<span>(7)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="size" class="tf-check tf-check-size"
-                                        value="m" id="m">
+                                    <input type="radio" name="size" class="tf-check tf-check-size" value="m"
+                                        id="m">
                                     <label for="m" class="label"><span>M</span>&nbsp;<span>(8)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="size" class="tf-check tf-check-size"
-                                        value="l" id="l">
+                                    <input type="radio" name="size" class="tf-check tf-check-size" value="l"
+                                        id="l">
                                     <label for="l" class="label"><span>L</span>&nbsp;<span>(8)</span></label>
                                 </li>
                                 <li class="list-item d-flex gap-12 align-items-center">
-                                    <input type="radio" name="size" class="tf-check tf-check-size"
-                                        value="xl" id="xl">
+                                    <input type="radio" name="size" class="tf-check tf-check-size" value="xl"
+                                        id="xl">
                                     <label for="xl" class="label"><span>XL</span>&nbsp;<span>(6)</span></label>
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                    <div class="tf-mini-cart-view-checkout row justify-content-around">
+                        <input type="submit" value="Apply"
+                            class="tf-btn btn-fill animate-hover-btn radius-3 w-25 justify-content-center">
+                        <input type="reset" value="Reset"
+                            class="tf-btn btn-outline radius-3 link w-25 justify-content-center">
+
                     </div>
                 </form>
             </div>

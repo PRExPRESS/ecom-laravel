@@ -22,6 +22,22 @@
     {{-- <pre>
         {{ print_r($cart) }}
     </pre> --}}
+    @if (session('success'))
+        <div class="position-fixed top-0 z-3 end-0 alert-wrap">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="position-fixed top-0 z-3 end-0 alert-wrap">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
 
     <header id="header" class="header-default">
         <div class="px_15 lg-px_40">
@@ -65,7 +81,7 @@
                         <li class="nav-search"><a href="#canvasSearch" data-bs-toggle="offcanvas"
                                 aria-controls="offcanvasLeft" class="nav-icon-item"><i class="icon icon-search"></i></a>
                         </li>
-                        <li class="nav-account"><a href="#login" data-bs-toggle="modal" class="nav-icon-item"><i
+                        <li class="nav-account"><a href="/my-account" class="nav-icon-item"><i
                                     class="icon icon-account"></i></a></li>
                         <li class="nav-cart"><a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item"><i
                                     class="icon icon-bag"></i><span class="count-box">0</span></a></li>
@@ -314,7 +330,7 @@
                     </div>
                 </div>
                 <div class="tf-search-sticky">
-                    <form class="tf-mini-search-frm">
+                    <form class="tf-mini-search-frm" action="/shop-search" method="get">
                         <fieldset class="text">
                             <input type="text" placeholder="Search" class="" name="text" tabindex="0"
                                 value="" aria-required="true" required="">
@@ -442,7 +458,7 @@
                                             <a href="/view-cart"
                                                 class="tf-btn btn-outline radius-3 link w-100 justify-content-center">View
                                                 cart</a>
-                                            <a href="checkout.html"
+                                            <a href="/checkout"
                                                 class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>Check
                                                     out</span></a>
                                         </div>

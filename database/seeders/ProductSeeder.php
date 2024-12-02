@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Red',
             'sizes' => 'S, M, L',
             'description' => 'A basic red T-shirt for everyday wear.',
-            'price' => 19.99,
+            'price' => 1900.99,
             'stock' => 150,
             'status' => 'available',
         ]);
@@ -37,7 +37,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Blue',
             'sizes' => 'M, L, XL',
             'description' => 'A classic blue T-shirt that never goes out of style.',
-            'price' => 22.99,
+            'price' => 2200.99,
             'stock' => 200,
             'status' => 'available',
         ]);
@@ -51,7 +51,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Black',
             'sizes' => '30, 32, 34, 36',
             'description' => 'Slim-fit trousers with a modern cut.',
-            'price' => 49.99,
+            'price' => 4900.99,
             'stock' => 120,
             'status' => 'available',
         ]);
@@ -65,7 +65,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Grey',
             'sizes' => '32, 34, 36',
             'description' => 'Casual grey trousers for a comfortable fit.',
-            'price' => 39.99,
+            'price' => 5539.99,
             'stock' => 180,
             'status' => 'available',
         ]);
@@ -79,7 +79,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Black',
             'sizes' => 'S, M, L',
             'description' => 'A sporty black T-shirt for an active lifestyle.',
-            'price' => 25.99,
+            'price' => 1125.99,
             'stock' => 220,
             'status' => 'available',
         ]);
@@ -93,7 +93,7 @@ class ProductSeeder extends Seeder
             'colors' => 'White',
             'sizes' => 'M, L',
             'description' => 'A simple and stylish white top for casual wear.',
-            'price' => 29.99,
+            'price' => 1329.99,
             'stock' => 160,
             'status' => 'available',
         ]);
@@ -107,7 +107,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Blue',
             'sizes' => 'S, M, L, XL',
             'description' => 'A stylish blue top for both casual and formal wear.',
-            'price' => 34.99,
+            'price' => 1234.99,
             'stock' => 140,
             'status' => 'available',
         ]);
@@ -121,7 +121,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Red',
             'sizes' => 'M, L',
             'description' => 'An elegant red top perfect for evening wear.',
-            'price' => 39.99,
+            'price' => 739.99,
             'stock' => 110,
             'status' => 'available',
         ]);
@@ -135,7 +135,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Black',
             'sizes' => 'M, L, XL',
             'description' => 'A premium black leather jacket for a bold look.',
-            'price' => 99.99,
+            'price' => 1199.99,
             'stock' => 80,
             'status' => 'available',
         ]);
@@ -149,7 +149,7 @@ class ProductSeeder extends Seeder
             'colors' => 'Green',
             'sizes' => 'S, M, L',
             'description' => 'A light and breathable green T-shirt for the summer.',
-            'price' => 18.99,
+            'price' => 1899.00,
             'stock' => 250,
             'status' => 'available',
         ]);

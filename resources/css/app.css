@@ -9,3 +9,18 @@
 @import url('./photoswipe.css');
 @import url('./styles.css');
 @import url('./swiper-bundle.min.css');
+
+.error {
+    color: red;
+}
+
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+  }
+  
+
+  .is-invalid {
+    border-color: red;
+  }

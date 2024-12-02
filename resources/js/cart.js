@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-    $('.add-to-cart-btn').on('click', function () {
+    $('.add-to-cart').on('click', function () {
 
         const item = $(this).data('product');
 
@@ -26,6 +26,7 @@ function addToCart(item) {
     const quantity = JSON.parse(item).quantity;
     const color = JSON.parse(item).color;
     const size = JSON.parse(item).size;
+    const image = JSON.parse(item).image;
 
     //console.log('item', JSON.parse(item))
 
@@ -39,7 +40,8 @@ function addToCart(item) {
             price: price,
             quantity: quantity,
             color: color,
-            size: size
+            size: size,
+            image: image
         },
         success: function (response) {
             console.log(response);
@@ -77,6 +79,7 @@ function getCartItems() {
         type: 'GET',
         dataType: 'json',
         success: function (response) {
+            console.log(response);
             const items = Object.values(response.items).map((item) => {
                 return {
                     id: item.item_id,
@@ -84,7 +87,8 @@ function getCartItems() {
                     price: item.price,
                     quantity: item.quantity,
                     color: item.color,
-                    size: item.size
+                    size: item.size,
+                    image: item.image
                 }
             });
             console.log(items);
@@ -181,7 +185,7 @@ function updateMiniCartUI(cartItems) {
             <div class="tf-mini-cart-item" data-product-id="${item.id}">
                 <div class="tf-mini-cart-image">
                     <a href="product-detail.html">
-                        <img src="{{ asset('images/products/white-2.jpg') }}" alt="">
+                        <img src="/images/products/${item.image}" alt="">
                     </a>
                 </div>
                 <div class="tf-mini-cart-info">
@@ -233,6 +237,10 @@ function bindCartItemEvents() {
         let productId = $(this).data('product-id');
         removeItemFromCart(productId);
     });
+}
+
+function checkout() {
+    $('.tf-page-cart-checkout').submit();
 }
 
 

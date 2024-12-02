@@ -6,8 +6,8 @@
     var applyFilter = function () {
       var selectedColors = [];
       var selectedSizes = [];
-      var selectedMinPrice = $(".range-min").val() ? parseFloat($(".range-min").val()) : 0;
-      var selectedMaxPrice = $(".range-max").val() ? parseFloat($(".range-max").val()) : 300;
+      var selectedMinPrice = $(".range-min").val() ? parseFloat($(".range-min").val()) : 500;
+      var selectedMaxPrice = $(".range-max").val() ? parseFloat($(".range-max").val()) : 5000;
   
       // Cập nhật giá trị hiển thị cho giá trị min/max price
       $(".min-price").text(`${selectedMinPrice}`);
@@ -104,6 +104,6 @@
 
 
   $(function () {
-    filterProducts();
+   // filterProducts();
   });
 })(jQuery);
