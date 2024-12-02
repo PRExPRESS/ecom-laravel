@@ -10,6 +10,9 @@
     <title>@yield('title', config('app.name')) | Trendiest</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <link rel="stylesheet" href="{{ asset('build/assets/app-044a44ad.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" integrity="sha512-Ysw1DcK1P+uYLqprEAzNQJP+J4hTx4t/3X2nbVwszao8wD+9afLjBQYjz7Uk4ADP+Er++mJoScI42ueGtQOzEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
@@ -53,7 +56,7 @@
                     </a>
                 </div>
                 <div class="col-xl-3 col-md-4 col-6">
-                    <a href="index.html" class="logo-header">
+                    <a href="/" class="logo-header">
                         <img src="{{ asset('images/logo/logo.svg') }}" alt="logo" class="logo">
                     </a>
                 </div>
@@ -725,6 +728,14 @@
                 </div>
             </div>
             <!-- /modal quick_view -->
+
+        </div>
+    </div>
+
+    <script type="module" src="{{ asset('build/assets/app-fd99b183.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

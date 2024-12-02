@@ -164,11 +164,11 @@
                                 <a href="/product/{{ $product->slug . '-' . explode(',', $product->colors)[0] . '-' . explode(',', $product->sizes)[0] . '?id=' . $product->id }}"
                                     class="product-img">
                                     <img class="lazyload img-product"
-                                        data-src="{{ asset('/images/products/' . $product->image) }}"
-                                        src="{{ asset('/images/products/' . $product->image) }}" alt="{{ $product->slug }}">
+                                        data-src="{{ Storage::url($product->image) }}"
+                                        src="{{ Storage::url($product->image) }}" alt="{{ $product->slug }}">
                                     <img class="lazyload img-hover"
-                                        data-src="{{ asset('/images/products/' . $product->image) }}"
-                                        src="{{ asset('/images/products/' . $product->image) }}" alt="{{ $product->slug }}">
+                                        data-src="{{ Storage::url($product->image) }}"
+                                        src="{{ Storage::url($product->image) }}" alt="{{ $product->slug }}">
                                 </a>
                                 <div class="list-product-btn column-left">
                                     <a href="javascript:void(0);" class="box-icon wishlist bg_white btn-icon-action">

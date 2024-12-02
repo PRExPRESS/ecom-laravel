@@ -104,7 +104,7 @@
                             @foreach ($cart as $item  )
                                 <li class="checkout-product-item">
                                     <figure class="img-product">
-                                        <img src="{{ asset('/images/products/' . $item['image']) }}" alt="product">
+                                        <img src="{{ Storage::url( $item['image']) }}" alt="product">
                                         <span class="quantity">{{ $item['quantity'] }}</span>
                                     </figure>
                                     <div class="content">

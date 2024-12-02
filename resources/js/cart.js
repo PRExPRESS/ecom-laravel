@@ -156,7 +156,7 @@ function updateCartUI(cart) {
     `);
     
     setTimeout(() => {
-        location.reload();
+        //location.reload();
     },1000)
 
 
@@ -185,7 +185,7 @@ function updateMiniCartUI(cartItems) {
             <div class="tf-mini-cart-item" data-product-id="${item.id}">
                 <div class="tf-mini-cart-image">
                     <a href="product-detail.html">
-                        <img src="/images/products/${item.image}" alt="">
+                        <img src="/storage/${item.image}" alt="">
                     </a>
                 </div>
                 <div class="tf-mini-cart-info">

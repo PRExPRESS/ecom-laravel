@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
             'slug' => 'basic-red-t-shirt',
             'category_id' => 1,  // T-shirt
             'brand_id' => 1,     // Brand A
-            'image' => 'basic-red-t-shirt.jpg',
+            'image' => 'images/products/basic-red-t-shirt.jpg',
             'colors' => 'Red',
             'sizes' => 'S, M, L',
             'description' => 'A basic red T-shirt for everyday wear.',
@@ -33,7 +33,7 @@ class ProductSeeder extends Seeder
             'slug' => 'classic-blue-t-shirt',
             'category_id' => 1,  // T-shirt
             'brand_id' => 2,     // Brand B
-            'image' => 'classic-blue-t-shirt.jpg',
+            'image' => 'images/products/classic-blue-t-shirt.jpg',
             'colors' => 'Blue',
             'sizes' => 'M, L, XL',
             'description' => 'A classic blue T-shirt that never goes out of style.',
@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
             'slug' => 'slim-fit-trouser',
             'category_id' => 2,  // Trouser
             'brand_id' => 3,     // Brand C
-            'image' => 'slim-fit-trouser.jpg',
+            'image' => 'images/products/slim-fit-trouser.jpg',
             'colors' => 'Black',
             'sizes' => '30, 32, 34, 36',
             'description' => 'Slim-fit trousers with a modern cut.',
@@ -61,7 +61,7 @@ class ProductSeeder extends Seeder
             'slug' => 'casual-grey-trouser',
             'category_id' => 2,  // Trouser
             'brand_id' => 1,     // Brand A
-            'image' => 'casual-grey-trouser.jpg',
+            'image' => 'images/products/casual-grey-trouser.jpg',
             'colors' => 'Grey',
             'sizes' => '32, 34, 36',
             'description' => 'Casual grey trousers for a comfortable fit.',
@@ -75,7 +75,7 @@ class ProductSeeder extends Seeder
             'slug' => 'sporty-black-t-shirt',
             'category_id' => 1,  // T-shirt
             'brand_id' => 2,     // Brand B
-            'image' => 'sporty-black-t-shirt.jpg',
+            'image' => 'images/products/sporty-black-t-shirt.jpg',
             'colors' => 'Black',
             'sizes' => 'S, M, L',
             'description' => 'A sporty black T-shirt for an active lifestyle.',
@@ -89,7 +89,7 @@ class ProductSeeder extends Seeder
             'slug' => 'white-casual-top',
             'category_id' => 3,  // Top
             'brand_id' => 3,     // Brand C
-            'image' => 'white-casual-top.jpg',
+            'image' => 'images/products/white-casual-top.jpg',
             'colors' => 'White',
             'sizes' => 'M, L',
             'description' => 'A simple and stylish white top for casual wear.',
@@ -103,7 +103,7 @@ class ProductSeeder extends Seeder
             'slug' => 'stylish-blue-top',
             'category_id' => 3,  // Top
             'brand_id' => 1,     // Brand A
-            'image' => 'stylish-blue-top.jpg',
+            'image' => 'images/products/stylish-blue-top.jpg',
             'colors' => 'Blue',
             'sizes' => 'S, M, L, XL',
             'description' => 'A stylish blue top for both casual and formal wear.',
@@ -117,7 +117,7 @@ class ProductSeeder extends Seeder
             'slug' => 'elegant-red-top',
             'category_id' => 3,  // Top
             'brand_id' => 2,     // Brand B
-            'image' => 'elegant-red-top.jpg',
+            'image' => 'images/products/elegant-red-top.jpg',
             'colors' => 'Red',
             'sizes' => 'M, L',
             'description' => 'An elegant red top perfect for evening wear.',
@@ -131,7 +131,7 @@ class ProductSeeder extends Seeder
             'slug' => 'black-leather-jacket',
             'category_id' => 3,  // Top
             'brand_id' => 3,     // Brand C
-            'image' => 'black-leather-jacket.jpg',
+            'image' => 'images/products/black-leather-jacket.jpg',
             'colors' => 'Black',
             'sizes' => 'M, L, XL',
             'description' => 'A premium black leather jacket for a bold look.',
@@ -145,7 +145,7 @@ class ProductSeeder extends Seeder
             'slug' => 'summer-green-t-shirt',
             'category_id' => 1,  // T-shirt
             'brand_id' => 2,     // Brand B
-            'image' => 'summer-green-t-shirt.jpg',
+            'image' => 'images/products/summer-green-t-shirt.jpg',
             'colors' => 'Green',
             'sizes' => 'S, M, L',
             'description' => 'A light and breathable green T-shirt for the summer.',

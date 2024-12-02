@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-4f3bf986.css",
+    "file": "assets/app-044a44ad.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -37,7 +37,7 @@
     "src": "resources/images/slider/image_bg_testimonials.jpg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-e06c39c9.js",
+    "file": "assets/app-fd99b183.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Brand;
 use App\Models\Review;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -35,41 +37,7 @@ class ProductController extends Controller
     }
 
 
-    public function filters(Request $request){
-        $categories = $request->input('category');
-        $price_min = $request->input('price-min');
-        $price_max = $request->input('price-max');
-        $brands = $request->input('brand');
-        $availability = $request->input('availability');
-
-        $query = Product::query();
-
-        if ($categories) {
-            $query->whereIn('category_id', $categories);
-        }
-
-        if ($price_min && $price_max) {
-            $query->whereBetween('price', [$price_min, $price_max]);
-        }
-
-        if ($brands) {
-            $query->whereIn('brand_id', $brands);
-        }
-
-        if ($availability) {
-            $query->where('status', $availability);
-        }
-
-        $products = $query->with('brand', 'category')->paginate(10);
-
-        $_categories = Category::all();
-        $_brands = Brand::all();
-        
-
-        return view('shop', compact('products'))
-        ->with('categories', $_categories)
-        ->with('brands', $_brands);
-    }
+    
 
     //get single product by id
     public function product(Request $request){
@@ -94,48 +62,70 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            // Validate incoming request data
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:products,slug',
+                'category_id' => 'required|exists:categories,id',
+                'brand_id' => 'required|exists:brands,id',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'colors' => 'required|string',
+                'sizes' => 'required|string',
+                'description' => 'required|string',
+                'price' => 'required|numeric|min:0',
+                'stock' => 'required|integer|min:0',
+                'status' => 'required|string',
+            ]);
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('images/products', 'public');
+            }
+
+            // Create new product
+            $product = new Product();
+            $product->name = $validated['name'];
+            $product->slug = $validated['slug'];
+            $product->category_id = $validated['category_id'];
+            $product->brand_id = $validated['brand_id'];
+            $product->image = $imagePath ?? null;
+            $product->colors = $validated['colors'];
+            $product->sizes = $validated['sizes'];
+            $product->description = $validated['description'];
+            $product->price = $validated['price'];
+            $product->stock = $validated['stock'];
+            $product->status = $validated['status'];
+            $product->save();
+
+            
+            return redirect()->route('admin.admin.products.index')->with('success', 'Product created successfully.');
+        } catch (Exception $e) {
+            
+            dd($e->getMessage());
+            return redirect()->back()->with('error', 'Failed to create product. Please try again.');
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreProductRequest $request)
-    {
-        //
+    //admin product
+    public function adminProduct(){
+        $products = Product::with('brand', 'category')->paginate(10);
+        return view('admin.prodcuts', compact('products'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //
+    //delete product
+    public function delete($id){
+        
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('admin.admin.products.index')->with('success', 'Product deleted successfully.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProductRequest $request, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        //
+    //view product
+    public function viewProduct($id){
+        $product = Product::with('brand', 'category')->find($id);
+        return view('admin.view-product', compact('product'));
     }
 }

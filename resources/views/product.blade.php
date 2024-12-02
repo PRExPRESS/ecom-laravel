@@ -48,8 +48,8 @@
                                         <div class="swiper-slide stagger-item" data-color="brown">
                                             <div class="item">
                                                 <img class="lazyload"
-                                                    data-src="{{ asset('images/products/' . $product->image) }}"
-                                                    src="{{ asset('images/products/' . $product->image) }}"
+                                                    data-src="{{ Storage::url($product->image) }}"
+                                                    src="{{ Storage::url($product->image) }}"
                                                     alt="img-product">
                                             </div>
                                         </div>
@@ -60,11 +60,11 @@
                                     <div class="swiper-wrapper">
                                         <!-- brown -->
                                         <div class="swiper-slide" data-color="brown">
-                                            <a href="{{ asset('images/products/' . $product->image) }}" target="_blank"
+                                            <a href="{{ Storage::url($product->image) }}" target="_blank"
                                                 class="item" data-pswp-width="770px" data-pswp-height="1075px">
                                                 <img class="tf-image-zoom-magnifier lazyload"
-                                                    data-zoom="{{ asset('images/products/' . $product->image) }}"
-                                                    data-src="{{ asset('images/products/' . $product->image) }}"
+                                                    data-zoom="{{ Storage::url($product->image) }}"
+                                                    data-src="{{ Storage::url($product->image) }}"
                                                     alt="img-product">
                                             </a>
                                         </div>
@@ -444,6 +444,8 @@
                                             
                                         </div>
                                     </div>
+                                    @if(Auth::check())
+
                                     <form class="form-write-review write-review-wrap" action="/review" method="post">
                                         @csrf
                                         <div class="heading">
@@ -481,6 +483,7 @@
                                                 Reviews</button>
                                         </div>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                             <div class="widget-content-inner">

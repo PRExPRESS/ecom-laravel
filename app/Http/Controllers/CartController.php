@@ -128,5 +128,24 @@ class CartController extends Controller
         }
         
     }
+
+    //orders
+    public function orders(){
+        $orders = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
+        ->join('products', 'order_items.product_id', '=', 'products.id')
+        
+        ->join('users', 'orders.user_id', '=', 'users.id')  // Join with users
+        
+        ->paginate(10);
+
+        return view('admin.orders', compact('orders'));
+    }
+
+    //delete order
+    public function deleteOrder($id){
+        $order = Order::find($id);
+        $order->delete();
+        return redirect()->route('admin.admin.orders')->with('success', 'Order deleted successfully');
+    }
     
 }
